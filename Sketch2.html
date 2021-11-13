@@ -1,0 +1,188 @@
+<html>
+<head>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/p5.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.5/addons/p5.dom.js"></script>
+	<script src="p5.speech.js"></script>
+	<script src="p5.sound.js"></script>
+	
+	
+	
+	<script>
+		///coding train start
+	var myRec = new p5.SpeechRec('en-US', parseResult); // new P5.SpeechRec object
+	myRec.continuous = true; // do continuous recognition
+	myRec.interimResults = true; // allow partial recognition (faster, less accurate)
+
+	var x, y;
+	var dx, dy;
+let r=0,g=0,b=0;
+let size=20;
+let song, song1;
+
+	function setup()
+	{
+		 song = createAudio('assets/assets_sounds_clay.mp3');
+song1= createAudio('assets/assets_sounds_bubbles.mp3');
+		// graphics stuff:
+		createCanvas(windowWidth+50, windowHeight);
+		background(255, 255, 255);
+		fill(0, 0, 0, 255);
+		
+		x = width/2;
+		y = height/2;
+		dx = 0;
+		dy = 0;
+
+		// instructions:
+		textSize(20);
+		textAlign(LEFT);
+		text("Draw: up, down, left, right, clear, stop", 20, 20);
+		text("Size:giant, big, medium, small, bigger, smaller",20,40);
+		text("Colours: red, yellow, orange, green, blue, purple, pink, teal, brown, white, black", 20, 60);
+		//myRec.onResult = parseResult; // now in the constructor
+		myRec.start(); // start engine
+	}
+
+	function draw()
+	{
+
+fill(r,g,b);
+noStroke();
+		ellipse(x, y, size, size);
+		x+=dx;
+		y+=dy;
+		if(x<0) x = width;
+		if(y<0) y = height;
+		if(x>width) x = 0;
+		if(y>height) y = 0;
+	}
+
+	function parseResult()
+	{
+
+		// recognition system will often append words into phrases.
+		// so hack here is to only use the last word:
+		var mostrecentword = myRec.resultString.split(' ').pop();
+		if(mostrecentword.indexOf("left")!==-1) { 
+			dx=-1;dy=0; 
+		}
+		else if(mostrecentword.indexOf("right")!==-1) { 
+			dx=1;dy=0;
+		}
+		else if(mostrecentword.indexOf("up")!==-1) { 
+			dx=0;dy=-1; 
+		}
+		else if(mostrecentword.indexOf("down")!==-1) { 
+			dx=0;dy=1;
+		 }
+		
+		else if(mostrecentword.indexOf("clear")!==-1) {
+			 background(255); 
+			}
+			//coding train end
+			else if(mostrecentword.indexOf("stop")!==-1) {
+			dx=0;dy=0;
+		 }
+			////////
+			//colour
+			else if(mostrecentword.indexOf("red")!==-1) {
+			r=255;
+			b=0;
+			g=0;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("blue")!==-1) {
+			r=0;
+			b=255;
+			g=0;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("yellow")!==-1) {
+			r=255;
+			b=10;
+			g=150;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("green")!==-1) {
+			r=0;
+			b=0;
+			g=255;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("purple")!==-1) {
+			r=255;
+			b=255;
+			g=0;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("orang")!==-1) {
+			r=255;
+			b=0;
+			g=139;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("pink")!==-1) {
+			r=255;
+			b=253;
+			g=117;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("brown")!==-1) {
+			r=129;
+			b=0;
+			g=77;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("teal")!==-1) {
+			r=0;
+			b=255;
+			g=86;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("black")!==-1) {
+			r=0;
+			b=0;
+			g=0;
+			song.play();
+		 }
+		 else if(mostrecentword.indexOf("white")!==-1) {
+			r=255;
+			b=255;
+			g=255;
+			song.play();
+		 }
+		 //////
+		 //size
+		 else if(mostrecentword.indexOf("giant")!==-1) {
+			size= 1000;
+			song1.play();
+		 }
+		 else if(mostrecentword.indexOf("big")!==-1) {
+			size= 100;
+			song1.play();
+		 }
+		 else if(mostrecentword.indexOf("medium")!==-1) {
+			size= 50;
+			song1.play();
+		 }
+		 else if(mostrecentword.indexOf("small")!==-1) {
+			size= 20;
+			song1.play();
+		 }
+		 else if(mostrecentword.indexOf("bigger")!==-1) {
+			size= size+5;
+			song1.play();
+		 }
+		 else if(mostrecentword.indexOf("smaller")!==-1) {
+			size=size-5;
+			song1.play();
+		 }
+		console.log(mostrecentword);
+	}
+
+</script>
+</head>
+<body>
+</body>
+</html>
